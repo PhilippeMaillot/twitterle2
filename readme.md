@@ -85,13 +85,13 @@ npm run dev
 
 ## 📸 Captures d'écran
 ### 🎭 Page d'accueil
-![Home](public/home.png)
+![Home](/twitter-le-2/public/home.png)
 
 ### 💬 Messagerie en temps réel
-![Messages](public/messages.png)
+![Messages](/twitter-le-2/public/messages.png)
 
 ### 🤖 Krok - IA intégrée
-![Krok AI](public/krok.png)
+![Krok AI](/twitter-le-2/public/krok.png)
 
 ---
 
