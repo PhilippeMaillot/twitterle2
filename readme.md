@@ -94,14 +94,3 @@ npm run dev
 ![Krok AI](/twitter-le-2/public/krok.png)
 
 ---
-
-## 🤝 Contribuer
-Les contributions sont les bienvenues ! 🎉  
-Forke le projet, crée une branche et soumets une **pull request**.
-
----
-
-## 📄 License
-Ce projet est sous licence **MIT**.  
-👨‍💻 Développé avec ❤️ par **[Ton Nom]**.
-
