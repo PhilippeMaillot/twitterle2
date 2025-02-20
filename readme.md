@@ -85,13 +85,13 @@ npm run dev
 
 ## 📸 Captures d'écran
 ### 🎭 Page d'accueil
-![Home](public/screenshots/home.png)
+![Home](public/home.png)
 
 ### 💬 Messagerie en temps réel
-![Messages](public/screenshots/messages.png)
+![Messages](public/messages.png)
 
 ### 🤖 Krok - IA intégrée
-![Krok AI](public/screenshots/krok.png)
+![Krok AI](public/krok.png)
 
 ---
 
