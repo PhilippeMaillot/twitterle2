@@ -83,12 +83,10 @@ class postsController {
     static async findUserLikedPosts(req, res) {
         try {
             const userId = AuthController.decodeToken(req);
-            console.log(userId);
             postsModel.findUserLikedPosts(userId, (error, results) => {
                 if (error) {
                     return res.status(500).json({ error: "Une erreur est survenue." });
                 }
-                console.log(results);
                 res.status(200).json(results);
             });
         } catch (error) {

@@ -1,0 +1,70 @@
+.parametre-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #2b2b2b;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .parametre-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    color: #f3f3f3;
+  }
+  
+  input,
+  textarea {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border 0.3s;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .save-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .save-button:hover {
+    background: #0056b3;
+  }
+  
+  textarea {
+    resize: vertical; /* Empêche l'agrandissement horizontal, mais permet l'agrandissement vertical */
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border 0.3s;
+  }
+  

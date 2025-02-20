@@ -69,25 +69,115 @@ export const logoutUser = () => {
 export const handleImageUpload = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
-  
-    try {
-      const response = await fetch(`${API_URL}/upload`, {
-        method: "POST",
-        body: formData,
-      });
-  
-      const data = await response.json();
-      if (response.ok) {
-        console.log("✅ Image uploadée :", data.imageUrl);
-      } else {
-        console.error("❌ Erreur d'upload :", data.error);
-      }
-    } catch (error) {
-      console.error("❌ Erreur réseau :", error);
-    }
-  };
 
-  export const fetchPosts = async () => {
+    try {
+        const response = await fetch(`${API_URL}/upload`, {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        console.log("📦 Réponse API Upload :", data); // ✅ Vérifier la réponse complète
+
+        if (response.ok) {
+            console.log("✅ Image uploadée :", data);
+            return data.imageUrl; // ✅ Retourne l'URL complète de l'image
+        } else {
+            console.error("❌ Erreur d'upload :", data.error);
+            return null;
+        }
+    } catch (error) {
+        console.error("❌ Erreur réseau :", error);
+        return null;
+    }
+};
+
+export const changeAvatar = async (file) => {
+    console.log("🚀 Changement d'avatar en cours...");
+    console.log("📁 Fichier à envoyer :", file);
+    const token = localStorage.getItem("token");
+    if (!token) {
+        console.error("❌ Utilisateur non authentifié.");
+        return;
+    }
+
+    // ✅ Upload de l'image d'abord
+    const imageUrl = await handleImageUpload(file);
+    console.log("🔗 URL de l'image uploadée :", imageUrl); // 🔥 Vérification
+    if (!imageUrl) {
+        console.error("❌ Impossible de récupérer l'image uploadée.");
+        return;
+    }
+
+    // ✅ Mise à jour de l'avatar utilisateur
+    try {
+        console.log("📤 Envoi de la requête à /users/changeAvatar", { avatar: imageUrl });
+
+        const response = await fetch(`${API_URL}/users/changeAvatar`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ avatar: imageUrl }),
+        });
+
+        const data = await response.json();
+        console.log("📦 Réponse API :", data);
+
+        if (response.ok) {
+            console.log("✅ Avatar mis à jour :", data);
+            return data;
+        } else {
+            console.error("❌ Erreur lors de la mise à jour de l'avatar :", data.error);
+        }
+    } catch (error) {
+        console.error("❌ Erreur réseau :", error);
+    }
+};
+
+export const changeBanner = async (file) => {
+    console.log("🚀 Changement de bannière en cours...");
+    console.log("📁 Fichier à envoyer :", file);
+    const token = localStorage.getItem("token");
+    if (!token) {
+        console.error("❌ Utilisateur non authentifié.");
+        return;
+    }
+
+    // ✅ Upload de l'image
+    const imageUrl = await handleImageUpload(file);
+    console.log("🔗 URL de l'image uploadée :", imageUrl);
+    if (!imageUrl) {
+        console.error("❌ Impossible de récupérer l'image uploadée.");
+        return;
+    }
+
+    // ✅ Mise à jour de la bannière utilisateur
+    try {
+        const response = await fetch(`${API_URL}/users/changeBanner`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ banner: imageUrl }), // ✅ Envoi de l'URL de l'image
+        });
+
+        const data = await response.json();
+        console.log("📦 Réponse API :", data);
+        if (response.ok) {
+            console.log("✅ Bannière mise à jour :", data);
+            return data;
+        } else {
+            console.error("❌ Erreur lors de la mise à jour de la bannière :", data.error);
+        }
+    } catch (error) {
+        console.error("❌ Erreur réseau :", error);
+    }
+};
+
+export const fetchPosts = async () => {
     try {
         const response = await fetch(`${API_URL}/posts`);
         if (!response.ok) {
@@ -127,7 +217,7 @@ export const fetchUserProfile = async () => {
         console.error("❌ Erreur réseau:", error);
         return null;
     }
-}; 
+};
 
 //api call pour ajouter un like à un post on va envoyer le token, l'id du post dans le body de la requête
 export const likePost = async (postId) => {
@@ -230,44 +320,44 @@ export const fetchAllUsers = async () => {
 export const fetchMessagesBetweenUsers = async (receiverId) => {
     const token = localStorage.getItem("token");
     if (!token) return null;
-  
+
     try {
-      const response = await fetch(`http://localhost:8081/messages/conversation/${receiverId}`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      if (!response.ok) throw new Error("Erreur lors de la récupération des messages");
-  
-      return await response.json();
+        const response = await fetch(`http://localhost:8081/messages/conversation/${receiverId}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) throw new Error("Erreur lors de la récupération des messages");
+
+        return await response.json();
     } catch (error) {
-      console.error("❌ Erreur réseau:", error);
-      return [];
+        console.error("❌ Erreur réseau:", error);
+        return [];
     }
-  };
-  
-  export const sendMessageAPI = async (receiverId, content) => {
+};
+
+export const sendMessageAPI = async (receiverId, content) => {
     const token = localStorage.getItem("token");
     if (!token) return null;
-  
-    try {
-      const response = await fetch(`http://localhost:8081/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ receiverId, content }),
-      });
-  
-      return await response.json();
-    } catch (error) {
-      console.error("❌ Erreur réseau:", error);
-      return null;
-    }
-  };
 
-  export const fetchUserConversations = async () => {
+    try {
+        const response = await fetch(`http://localhost:8081/messages`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ receiverId, content }),
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error("❌ Erreur réseau:", error);
+        return null;
+    }
+};
+
+export const fetchUserConversations = async () => {
     const token = localStorage.getItem("token");
     if (!token) return null;
 
@@ -286,5 +376,6 @@ export const fetchMessagesBetweenUsers = async (receiverId) => {
     }
 };
 
-  
+//change avatar and banner
+
 

@@ -7,22 +7,22 @@ import Profile from "./pages/profiles/Profile";
 import Messages from "./pages/messages/Message";
 import Krok from "./pages/krok/Krok";
 import Auth from "./pages/auth/Auth";
+import Parametre from "./pages/parametres/Parametre";
 
 import './index.css';
-
-const Settings = () => <h2>⚙️ Paramètres</h2>;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+      <Route path="auth" element={<Auth />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="auth" element={<Auth />} />
+          
           <Route path="profile" element={<Profile />} />
           <Route path="messages" element={<Messages />} />
           <Route path="krok" element={<Krok />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="settings" element={<Parametre />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from "react";
 import "./TweetCard.css";
 import { likePost, unlikePost, fetchLikedPosts } from "../../api/apiCalls"; // ✅ Importer les fonctions API
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons"; // Icône de fermeture
 
 const TweetCard = ({ post }) => {
   const [fullscreenImage, setFullscreenImage] = useState(null);
@@ -92,14 +96,16 @@ const TweetCard = ({ post }) => {
 
       {fullscreenImage && (
         <div className="fullscreen-overlay" onClick={closeImageFullscreen}>
-          <button className="close-overlay" onClick={closeImageFullscreen}>✖</button>
+          <button className="close-overlay" onClick={closeImageFullscreen}>
+            <FontAwesomeIcon icon={faTimes} /> {/* Icône de fermeture ✖ */}
+          </button>
           <img src={fullscreenImage} alt="Tweet en grand format" className="fullscreen-image" />
         </div>
       )}
 
       <div className="actions">
         <button onClick={handleLike} className={liked ? "liked" : ""}>
-          {liked ? "❤️" : "🤍"} {likes}
+          <FontAwesomeIcon icon={liked ? solidHeart : regularHeart} className="heart-icon" /> {likes}
         </button>
       </div>
     </div>

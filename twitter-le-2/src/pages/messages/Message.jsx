@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import "./Message.css";
 import { fetchAllUsers, fetchUserConversations, fetchMessagesBetweenUsers, sendMessageAPI } from "../../api/apiCalls";
+import useAuthGuard from "../../hooks/useAuthGuard";
 
 // Connexion au WebSocket une seule fois
 const socket = io("http://localhost:8081", {
@@ -16,6 +17,7 @@ const createRoomId = (userId1, userId2) => {
 };
 
 const Messages = ({ currentUserId }) => {
+  useAuthGuard();
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);

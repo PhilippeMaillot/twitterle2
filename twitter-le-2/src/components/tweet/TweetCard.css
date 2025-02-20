@@ -80,3 +80,33 @@
     margin-right: 10px;
     transition: 0.2s;
   }
+
+  .heart-icon {
+    margin-right: 5px;
+    color: #e0245e;
+    transition: transform 0.2s;
+  }
+  
+  .heart-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  .liked .heart-icon {
+    color: red;
+  }
+  
+  .close-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .close-overlay:hover {
+    color: #ff4d4d;
+  }
+  

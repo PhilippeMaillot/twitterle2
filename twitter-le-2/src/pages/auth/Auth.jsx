@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { registerUser, loginUser } from "../../api/apiCalls";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 const Auth = () => {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("register");
     const [registerData, setRegisterData] = useState({ username: "", email: "", password: "" });
     const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -30,12 +32,17 @@ const Auth = () => {
         const response = await loginUser(loginData.email, loginData.password);
         if (response?.token) {
             localStorage.setItem("token", response.token);
-            console.log("Token enregistré :", response.token); // Vérifier si le token est bien stocké
+            console.log("Token enregistré :", response.token);
             setMessage("Connexion réussie !");
+
+            // ✅ Rediriger après un court délai
+            setTimeout(() => {
+                navigate("/"); // 🔥 Redirection vers la page d'accueil
+            }, 1000);
         } else {
             setMessage(response?.error || "Erreur lors de la connexion");
         }
-    };    
+    };
 
     return (
         <div className="auth-container">
@@ -53,7 +60,14 @@ const Auth = () => {
                     <form onSubmit={handleRegister} className="auth-form">
                         <h2>Inscription</h2>
                         <input type="text" name="username" placeholder="Nom d'utilisateur" onChange={(e) => handleChange(e, "register")} required />
-                        <input type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e, "register")} required />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            autoComplete="new-password" // Trick pour éviter l'autofill
+                            onChange={(e) => handleChange(e, "register")}
+                            required
+                        />
                         <input type="password" name="password" placeholder="Mot de passe" onChange={(e) => handleChange(e, "register")} required />
                         <button type="submit">S'inscrire</button>
                     </form>

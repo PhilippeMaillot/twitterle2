@@ -6,7 +6,7 @@
   
   /* Barre latérale */
   .sidebar {
-    padding-top: 10%;
+    padding-top: 20px;
     width: 250px;
     background-color: #000000;
     border-right: 1px solid #d3e8f7;
@@ -26,7 +26,7 @@
   
   /* Liens */
   .sidebar li {
-    padding-left: 10%;
+    padding-left: 25px;
     width: 85%;
     margin-bottom: 15px;
   }
@@ -73,7 +73,7 @@
 .sidebar ul li a,
 .sidebar ul li button {
   display: block;
-  width: 100%;
+  width: 95%;
   padding: 10px;
   text-align: left;
   border: none;
@@ -108,6 +108,24 @@
   font-size: 12px;
   color: #aaa; /* Couleur plus discrète */
   margin: 0;
+}
+
+/* Conteneur du logo */
+.logo-container {
+  display: flex;
+  justify-content: flex-start; /* Aligner à gauche */
+  align-items: center; /* Centrer verticalement */
+  padding: 20px; /* Espacement autour du logo */
+  width: 100%;
+  padding-bottom: 100px;
+}
+
+/* Logo Twitter */
+.twitter-logo {
+  width: 100px; /* Taille du logo */
+  height: 90px;
+  object-fit: cover;
+  margin-left: 40px;
 }
 
   

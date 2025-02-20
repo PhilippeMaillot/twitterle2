@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { fetchUserProfile } from "../../api/apiCalls";
+import { changeAvatar, changeBanner } from "../../api/apiCalls"; // ✅ Import de la fonction pour changer d'avatar
 import TweetCard from "../../components/tweet/TweetCard";
+import useAuthGuard from "../../hooks/useAuthGuard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faBullhorn } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = () => {
+  useAuthGuard();
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState("tweets");
-
-  // Stocke les fichiers sélectionnés (avatar et bannière) pour l'envoi futur à l'API
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [selectedBanner, setSelectedBanner] = useState(null);
-
-  // Stocke l'aperçu des images avant enregistrement
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [previewBanner, setPreviewBanner] = useState(null);
 
@@ -30,22 +29,42 @@ const Profile = () => {
   }
 
   // 📌 Gestion du changement d'avatar
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedAvatar(file);
-      setPreviewAvatar(URL.createObjectURL(file)); // Affichage temporaire
+      setPreviewAvatar(URL.createObjectURL(file)); // ✅ Affichage temporaire immédiat
+
+      // ✅ Upload & mise à jour de l'avatar
+      const updatedProfile = await changeAvatar(file);
+      console.log("✅ Profil mis à jour :", updatedProfile);
+
+      if (updatedProfile) {
+        setProfile(prevProfile => ({
+          ...prevProfile, // 🔥 Garde tous les autres champs
+          avatar: updatedProfile.avatar // 🔥 Met à jour seulement l'avatar
+        }));
+      }
     }
   };
 
-  // 📌 Gestion du changement de bannière
-  const handleBannerChange = (e) => {
+  const handleBannerChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedBanner(file);
-      setPreviewBanner(URL.createObjectURL(file)); // Affichage temporaire
+      setPreviewBanner(URL.createObjectURL(file)); // ✅ Affichage temporaire immédiat
+
+      // ✅ Upload & mise à jour de la bannière
+      const updatedProfile = await changeBanner(file);
+      console.log("✅ Profil mis à jour :", updatedProfile);
+
+      if (updatedProfile) {
+        setProfile(prevProfile => ({
+          ...prevProfile, // 🔥 Garde tous les autres champs
+          banner: updatedProfile.banner // 🔥 Met à jour seulement la bannière
+        }));
+      }
     }
   };
+
 
   return (
     <div className="profile">
@@ -82,10 +101,10 @@ const Profile = () => {
       {/* Onglets (Tweets / Likes) */}
       <div className="tabs">
         <button className={activeTab === "tweets" ? "active" : ""} onClick={() => setActiveTab("tweets")}>
-          📢 Tweets
+          <FontAwesomeIcon icon={faBullhorn} className="icon" /> Tweets
         </button>
         <button className={activeTab === "likes" ? "active" : ""} onClick={() => setActiveTab("likes")}>
-          ❤️ Likes
+          <FontAwesomeIcon icon={faHeart} className="icon" /> Likes
         </button>
       </div>
 

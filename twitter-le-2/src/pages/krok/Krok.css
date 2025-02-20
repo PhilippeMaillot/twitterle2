@@ -1,76 +1,110 @@
 .krok {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  /* Chat Box */
-  .chat-box {
-    background: #141414;
-    padding: 15px;
-    border-radius: 10px;
-    height: 400px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .empty-chat {
-    color: gray;
-    font-style: italic;
-  }
-  
-  .message {
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 70%;
-    word-wrap: break-word;
-  }
-  
-  .message.user {
-    background-color: #1da1f2;
-    color: white;
-    align-self: flex-end;
-  }
-  
-  .message.assistant {
-    background-color: #666666;
-    align-self: flex-start;
-  }
-  
-  .loading {
-    color: gray;
-    font-style: italic;
-  }
-  
-  /* Barre d'entrée */
-  .chat-input {
-    display: flex;
-    margin-top: 10px;
-  }
-  
-  .chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    outline: none;
-  }
-  
-  .chat-input button {
-    margin-left: 10px;
-    padding: 10px 15px;
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  .chat-input button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
+  max-width: 900px; /* Augmentation de la largeur */
+  margin: 40px auto;
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Chat Box */
+.chat-box {
+  background: #2b2b2b;
+  padding: 20px;
+  border-radius: 10px;
+  height: 550px; /* Augmentation de la hauteur */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-chat {
+  color: gray;
+  font-style: italic;
+}
+
+/* Messages */
+.message {
+  padding: 12px;
+  border-radius: 10px;
+  max-width: 75%;
+  word-wrap: break-word;
+  font-size: 16px; /* Augmente légèrement la taille du texte */
+}
+
+/* Messages envoyés */
+.message.user {
+  background-color: #1da1f2;
+  color: white;
+  align-self: flex-end;
+  text-align: right;
+}
+
+/* Messages reçus */
+.message.assistant {
+  background-color: #3e3f3f;
+  color: white;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* Styles pour les listes */
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+/* Barre d’entrée */
+.chat-input {
+  display: flex;
+  margin-top: 15px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  background: #333;
+  color: white;
+  outline: none;
+  font-size: 16px; /* Texte plus lisible */
+}
+
+.chat-input button {
+  margin-left: 12px;
+  padding: 12px 18px;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-size: 16px;
+}
+
+.chat-input button:hover {
+  background-color: #0d8ce3;
+  transform: scale(1.05);
+}
+
+.chat-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading {
+  color: gray;
+  font-style: italic;
+  text-align: center;
+}
