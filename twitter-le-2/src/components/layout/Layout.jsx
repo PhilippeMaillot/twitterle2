@@ -28,6 +28,7 @@ const Layout = () => {
         {/* Logo Twitter */}
         <div className="logo-container">
           <img src="/twitter-logo.png" alt="Twitter Logo" className="twitter-logo" />
+          <p>(le 2)</p>
         </div>
 
         <ul>
