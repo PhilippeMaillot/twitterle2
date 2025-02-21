@@ -18,7 +18,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="auth" element={<Auth />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          
           <Route path="profile" element={<Profile />} />
           <Route path="messages" element={<Messages />} />
           <Route path="krok" element={<Krok />} />

@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { fetchUserProfile } from "../../api/apiCalls";
-import { changeAvatar, changeBanner } from "../../api/apiCalls"; // ✅ Import de la fonction pour changer d'avatar
+import { changeAvatar, changeBanner } from "../../api/apiCalls";
 import TweetCard from "../../components/tweet/TweetCard";
 import useAuthGuard from "../../hooks/useAuthGuard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,21 +29,19 @@ const Profile = () => {
   if (!profile) {
     return <p>Chargement du profil...</p>;
   }
+  console.log(profile);
 
   // 📌 Gestion du changement d'avatar
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPreviewAvatar(URL.createObjectURL(file)); // ✅ Affichage temporaire immédiat
+      setPreviewAvatar(URL.createObjectURL(file));
 
-      // ✅ Upload & mise à jour de l'avatar
       const updatedProfile = await changeAvatar(file);
-      console.log("✅ Profil mis à jour :", updatedProfile);
-
       if (updatedProfile) {
-        setProfile(prevProfile => ({
-          ...prevProfile, // 🔥 Garde tous les autres champs
-          avatar: updatedProfile.avatar // 🔥 Met à jour seulement l'avatar
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          avatar: updatedProfile.avatar,
         }));
       }
     }
@@ -50,21 +50,25 @@ const Profile = () => {
   const handleBannerChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPreviewBanner(URL.createObjectURL(file)); // ✅ Affichage temporaire immédiat
+      setPreviewBanner(URL.createObjectURL(file));
 
-      // ✅ Upload & mise à jour de la bannière
       const updatedProfile = await changeBanner(file);
-      console.log("✅ Profil mis à jour :", updatedProfile);
-
       if (updatedProfile) {
-        setProfile(prevProfile => ({
-          ...prevProfile, // 🔥 Garde tous les autres champs
-          banner: updatedProfile.banner // 🔥 Met à jour seulement la bannière
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          banner: updatedProfile.banner,
         }));
       }
     }
   };
 
+  // ✅ Fonction pour supprimer un tweet en temps réel
+  const handleDeleteTweet = (tweetId) => {
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      tweets: prevProfile.tweets.filter((tweet) => tweet.id !== tweetId),
+    }));
+  };
 
   return (
     <div className="profile">
@@ -72,12 +76,23 @@ const Profile = () => {
       <div className="banner">
         <label htmlFor="banner-upload">
           <img
-            src={previewBanner || (profile.banner ? `http://localhost:8081/uploads/${profile.banner}` : "http://localhost:8081/uploads/base_banner.jpeg")}
+            src={
+              previewBanner ||
+              (profile.banner
+                ? `http://localhost:8081/uploads/${profile.banner}`
+                : "http://localhost:8081/uploads/base_banner.jpg")
+            }
             alt="Bannière du profil"
             className="clickable-image"
           />
         </label>
-        <input type="file" id="banner-upload" accept="image/*" onChange={handleBannerChange} style={{ display: "none" }} />
+        <input
+          type="file"
+          id="banner-upload"
+          accept="image/*"
+          onChange={handleBannerChange}
+          style={{ display: "none" }}
+        />
       </div>
 
       {/* Photo de profil et infos */}
@@ -85,11 +100,22 @@ const Profile = () => {
         <label htmlFor="avatar-upload">
           <img
             className="avatar clickable-image"
-            src={previewAvatar || (profile.avatar ? `http://localhost:8081/uploads/${profile.avatar}` : "http://localhost:8081/uploads/base_avatar.png")}
+            src={
+              previewAvatar ||
+              (profile.avatar
+                ? `http://localhost:8081/uploads/${profile.avatar}`
+                : "http://localhost:8081/uploads/base_avatar.png")
+            }
             alt="Photo de profil"
           />
         </label>
-        <input type="file" id="avatar-upload" accept="image/*" onChange={handleAvatarChange} style={{ display: "none" }} />
+        <input
+          type="file"
+          id="avatar-upload"
+          accept="image/*"
+          onChange={handleAvatarChange}
+          style={{ display: "none" }}
+        />
 
         <div className="user-info">
           <h2>{profile.username}</h2>
@@ -100,10 +126,16 @@ const Profile = () => {
 
       {/* Onglets (Tweets / Likes) */}
       <div className="tabs">
-        <button className={activeTab === "tweets" ? "active" : ""} onClick={() => setActiveTab("tweets")}>
+        <button
+          className={activeTab === "tweets" ? "active" : ""}
+          onClick={() => setActiveTab("tweets")}
+        >
           <FontAwesomeIcon icon={faBullhorn} className="icon" /> Tweets
         </button>
-        <button className={activeTab === "likes" ? "active" : ""} onClick={() => setActiveTab("likes")}>
+        <button
+          className={activeTab === "likes" ? "active" : ""}
+          onClick={() => setActiveTab("likes")}
+        >
           <FontAwesomeIcon icon={faHeart} className="icon" /> Likes
         </button>
       </div>
@@ -113,7 +145,9 @@ const Profile = () => {
         {activeTab === "tweets" ? (
           <div className="tweets-section">
             {profile.tweets.length > 0 ? (
-              profile.tweets.map((tweet) => <TweetCard key={tweet.id} post={tweet} />)
+              profile.tweets.map((tweet) => (
+                <TweetCard key={tweet.id} post={tweet} onDelete={handleDeleteTweet} />
+              ))
             ) : (
               <p>Aucun tweet pour le moment.</p>
             )}

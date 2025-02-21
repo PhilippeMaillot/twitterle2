@@ -8,7 +8,6 @@ class UsersModel {
     }
 
     static findOne(id, callback) {
-        // Récupérer les informations de l'utilisateur
         const userQuery = "SELECT * FROM users WHERE id = ?";
 
         db.query(userQuery, [id], (error, results) => {
@@ -17,9 +16,10 @@ class UsersModel {
 
             const user = results[0];
 
-            // Récupérer les tweets de l'utilisateur
+            // Récupérer les tweets de l'utilisateur avec le nombre de likes
             const postsQuery = `
-                SELECT posts.*, users.username, users.avatar, users.display_name
+                SELECT posts.*, users.username, users.avatar, users.display_name,
+                       (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) AS likes
                 FROM posts
                 JOIN users ON posts.user_id = users.id
                 WHERE posts.user_id = ?
@@ -29,9 +29,10 @@ class UsersModel {
             db.query(postsQuery, [id], (error, posts) => {
                 if (error) return callback(error, null);
 
-                // Récupérer les tweets que l'utilisateur a likés
+                // Récupérer les tweets que l'utilisateur a likés avec le nombre de likes
                 const likedPostsQuery = `
-                    SELECT posts.*, users.username, users.avatar, users.display_name
+                    SELECT posts.*, users.username, users.avatar, users.display_name,
+                           (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) AS likes
                     FROM likes
                     JOIN posts ON likes.post_id = posts.id
                     JOIN users ON posts.user_id = users.id
@@ -42,7 +43,6 @@ class UsersModel {
                 db.query(likedPostsQuery, [id], (error, likedPosts) => {
                     if (error) return callback(error, null);
 
-                    // Ajout des tweets et des likes au profil utilisateur
                     user.tweets = posts;
                     user.likedTweets = likedPosts;
 
@@ -61,7 +61,7 @@ class UsersModel {
         if (!id || Object.keys(data).length === 0) {
             return callback(new Error("Données invalides"), null);
         }
-    
+
         const query = "UPDATE users SET ? WHERE id = ?";
         db.query(query, [data, id], (error, results) => {
             if (error) {
@@ -71,13 +71,13 @@ class UsersModel {
             console.log("✅ Mise à jour réussie :", results);
             callback(null, results);
         });
-    }    
+    }
 
     static updateAvatar(id, avatar, callback) {
         const query = "UPDATE users SET avatar = ? WHERE id = ?";
-    
+
         console.log("📌 SQL Query :", query, "avec valeurs :", avatar, id);
-    
+
         db.query(query, [avatar, id], (error, results) => {
             if (error) {
                 console.error("❌ Erreur SQL :", error);
@@ -86,13 +86,13 @@ class UsersModel {
             console.log("✅ Avatar mis à jour en base !");
             callback(null, results);
         });
-    }    
+    }
 
     static updateBanner(id, banner, callback) {
         const query = "UPDATE users SET banner = ? WHERE id = ?";
-    
+
         console.log("📌 SQL Query :", query, "avec valeurs :", banner, id);
-    
+
         db.query(query, [banner, id], (error, results) => {
             if (error) {
                 console.error("❌ Erreur SQL :", error);

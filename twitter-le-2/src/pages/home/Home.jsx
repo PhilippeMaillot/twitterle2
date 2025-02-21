@@ -110,21 +110,26 @@ const Home = () => {
       if (response.ok) {
         const newPost = {
           ...data,
-          avatar: user.avatar, // ✅ Ajout avatar utilisateur
-          username: user.username, // ✅ Ajout username
-          display_name: user.display_name, // ✅ Ajout display_name
+          avatar: user.avatar,
+          username: user.username,
+          display_name: user.display_name,
         };
 
-        setPosts([newPost, ...posts]); // ✅ Ajout du post immédiatement en front
+        setPosts((prevPosts) => [newPost, ...prevPosts]); // ✅ Ajout du post immédiatement
 
         // ✅ Réinitialisation des champs après l'envoi
         setTweetText("");
         setImage(null);
-        setImagePreview(null); // ✅ Supprime la preview de l'image après envoi
+        setImagePreview(null);
       }
     } catch (error) {
       console.error("❌ Erreur réseau :", error);
     }
+  };
+
+  // ✅ Fonction pour supprimer un tweet de l'affichage
+  const handleDeleteTweet = (tweetId) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== tweetId));
   };
 
   return (
@@ -170,7 +175,9 @@ const Home = () => {
           {posts.length === 0 ? (
             <p>Aucun tweet pour l'instant.</p>
           ) : (
-            posts.map((post) => <TweetCard key={post.id} post={post} />)
+            posts.map((post) => (
+              <TweetCard key={post.id} post={post} onDelete={handleDeleteTweet} />
+            ))
           )}
         </div>
 

@@ -115,6 +115,7 @@ const Parametre = () => {
                     placeholder="Nouveau mot de passe"
                     value={formData.password}
                     onChange={handleChange}
+                    autoComplete="new-password"
                 />
 
                 <button className="save-button" onClick={handleSaveChanges}>
