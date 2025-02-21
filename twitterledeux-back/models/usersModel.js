@@ -68,37 +68,28 @@ class UsersModel {
                 console.error("❌ Erreur SQL :", error);
                 return callback(error, null);
             }
-            console.log("✅ Mise à jour réussie :", results);
             callback(null, results);
         });
     }
 
     static updateAvatar(id, avatar, callback) {
         const query = "UPDATE users SET avatar = ? WHERE id = ?";
-
-        console.log("📌 SQL Query :", query, "avec valeurs :", avatar, id);
-
         db.query(query, [avatar, id], (error, results) => {
             if (error) {
                 console.error("❌ Erreur SQL :", error);
                 return callback(error, null);
             }
-            console.log("✅ Avatar mis à jour en base !");
             callback(null, results);
         });
     }
 
     static updateBanner(id, banner, callback) {
         const query = "UPDATE users SET banner = ? WHERE id = ?";
-
-        console.log("📌 SQL Query :", query, "avec valeurs :", banner, id);
-
         db.query(query, [banner, id], (error, results) => {
             if (error) {
                 console.error("❌ Erreur SQL :", error);
                 return callback(error, null);
             }
-            console.log("✅ bannière mis à jour en base !");
             callback(null, results);
         });
     }

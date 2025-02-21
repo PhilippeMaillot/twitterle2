@@ -8,6 +8,7 @@ import { OPENAI_API_KEY, API_URL } from "../../api/config";
 import useAuthGuard from "../../hooks/useAuthGuard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faPaperPlane, faFire } from "@fortawesome/free-solid-svg-icons"; // Ajout des icônes
+import TopThemes from "../../components/topthemes/TopThemes";
 
 const Home = () => {
   useAuthGuard();
@@ -181,19 +182,7 @@ const Home = () => {
           )}
         </div>
 
-        {/* ✅ Colonne 2 : Top 5 des sujets les plus traités */}
-        <div className="top-themes">
-          <h3><FontAwesomeIcon icon={faFire} className="icon" /> Top actus</h3> {/* 🔥 Icône top tweets */}
-          {topThemes.length === 0 ? (
-            <p>Analyse en cours...</p>
-          ) : (
-            <ul>
-              {topThemes.map((theme, index) => (
-                <li key={index}>{theme}</li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <TopThemes topThemes={topThemes} />
       </div>
     </div>
   );
