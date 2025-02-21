@@ -44,7 +44,7 @@ const Krok = () => {
         },
         body: JSON.stringify({
           model: "gpt-4o-mini",
-          messages: [...messages, userMessage, systemMessage],
+          messages: [systemMessage, ...messages.slice(-10), userMessage],
           temperature: 0.7,
           max_tokens: 500,
           top_p: 1,
