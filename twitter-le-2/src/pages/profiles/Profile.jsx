@@ -29,9 +29,7 @@ const Profile = () => {
   if (!profile) {
     return <p>Chargement du profil...</p>;
   }
-  console.log(profile);
 
-  // 📌 Gestion du changement d'avatar
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -62,7 +60,6 @@ const Profile = () => {
     }
   };
 
-  // ✅ Fonction pour supprimer un tweet en temps réel
   const handleDeleteTweet = (tweetId) => {
     setProfile((prevProfile) => ({
       ...prevProfile,
@@ -95,7 +92,6 @@ const Profile = () => {
         />
       </div>
 
-      {/* Photo de profil et infos */}
       <div className="profile-header">
         <label htmlFor="avatar-upload">
           <img
@@ -124,7 +120,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Onglets (Tweets / Likes) */}
       <div className="tabs">
         <button
           className={activeTab === "tweets" ? "active" : ""}
@@ -140,7 +135,6 @@ const Profile = () => {
         </button>
       </div>
 
-      {/* Contenu de l’onglet actif */}
       <div className="tab-content">
         {activeTab === "tweets" ? (
           <div className="tweets-section">

@@ -17,8 +17,8 @@ const Layout = () => {
   // Fonction pour se déconnecter
   const handleLogout = () => {
     localStorage.removeItem("token"); // Supprime le token
-    setIsAuthenticated(false); // Met à jour l'état
-    navigate("/auth"); // Redirige vers la page de connexion
+    setIsAuthenticated(false);
+    navigate("/auth");
   };
 
   return (

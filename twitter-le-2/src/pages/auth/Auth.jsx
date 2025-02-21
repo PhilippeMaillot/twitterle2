@@ -32,12 +32,10 @@ const Auth = () => {
         const response = await loginUser(loginData.email, loginData.password);
         if (response?.token) {
             localStorage.setItem("token", response.token);
-            console.log("Token enregistré :", response.token);
             setMessage("Connexion réussie !");
 
-            // ✅ Rediriger après un court délai
             setTimeout(() => {
-                navigate("/"); // 🔥 Redirection vers la page d'accueil
+                navigate("/");
             }, 1000);
         } else {
             setMessage(response?.error || "Erreur lors de la connexion");
@@ -64,7 +62,7 @@ const Auth = () => {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            autoComplete="new-password" // Trick pour éviter l'autofill
+                            autoComplete="new-password"
                             onChange={(e) => handleChange(e, "register")}
                             required
                         />

@@ -116,9 +116,8 @@ const Home = () => {
           display_name: user.display_name,
         };
 
-        setPosts((prevPosts) => [newPost, ...prevPosts]); // ✅ Ajout du post immédiatement
+        setPosts((prevPosts) => [newPost, ...prevPosts]);
 
-        // ✅ Réinitialisation des champs après l'envoi
         setTweetText("");
         setImage(null);
         setImagePreview(null);
@@ -128,7 +127,6 @@ const Home = () => {
     }
   };
 
-  // ✅ Fonction pour supprimer un tweet de l'affichage
   const handleDeleteTweet = (tweetId) => {
     setPosts((prevPosts) => prevPosts.filter((post) => post.id !== tweetId));
   };

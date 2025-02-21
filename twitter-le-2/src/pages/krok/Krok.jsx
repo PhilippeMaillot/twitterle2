@@ -56,7 +56,6 @@ const Krok = () => {
       const data = await response.json();
       const botContent = data.choices?.[0]?.message?.content || "Je n'ai pas compris...";
 
-      // ✅ Formater les messages pour gérer le gras et les listes
       const botMessage = {
         role: "assistant",
         content: formatMessage(botContent),
@@ -74,14 +73,10 @@ const Krok = () => {
     setLoading(false);
   };
 
-  // ✅ Fonction pour formater les messages
   const formatMessage = (text) => {
     return text
-      // ✅ Convertir le **texte** en <strong>texte</strong> pour le gras
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      // ✅ Convertir les listes numérotées en <ul> et <li>
       .replace(/\d+\.\s(.+?)(?=\n\d+\.|\n\n|$)/g, "<li>$1</li>")
-      // ✅ Remplacer les sauts de ligne par des <br>
       .replace(/(?:\r\n|\r|\n)/g, "<br>");
   };
 
@@ -95,7 +90,6 @@ const Krok = () => {
           messages.map((msg, index) => (
             <div key={index} className={`message ${msg.role}`}>
               {msg.role === "assistant" ? (
-                // ✅ Affichage des messages assistant avec mise en forme HTML
                 <p dangerouslySetInnerHTML={{ __html: msg.content }} />
               ) : (
                 <p>{msg.content}</p>
@@ -104,8 +98,6 @@ const Krok = () => {
           ))
         )}
         {loading && <p className="loading">Krok réfléchit...</p>}
-
-        {/* ✅ Élément pour scroller en bas automatiquement */}
         <div ref={messagesEndRef} />
       </div>
 

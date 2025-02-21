@@ -74,13 +74,12 @@ const TweetCard = ({ post, onDelete }) => {
     }
   };
 
-  // ✅ Supprime instantanément le tweet de l'affichage AVANT la requête API
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
     if (window.confirm("Voulez-vous vraiment supprimer ce tweet ?")) {
-      onDelete(post.id); // ✅ Retirer immédiatement le tweet de l'affichage
+      onDelete(post.id);
 
       try {
         const response = await fetch(`http://localhost:8081/posts/${post.id}`, {
@@ -116,7 +115,6 @@ const TweetCard = ({ post, onDelete }) => {
         </div>
         <span className="post-date">{formatDate(post.created_at)}</span>
 
-        {/* ✅ Bouton de suppression visible seulement si l'utilisateur est l'auteur */}
         {currentUser && currentUser.id === post.user_id && (
           <button className="delete-button" onClick={handleDeletePost}>
             <FontAwesomeIcon icon={faTrash} />

@@ -29,7 +29,6 @@ const Messages = ({ currentUserId }) => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("🟢 Connecté à WebSocket avec ID :", socket.id);
       if (selectedConversation) {
         const roomId = createRoomId(currentUserId, selectedConversation);
         socket.emit("joinRoom", roomId);
@@ -41,15 +40,11 @@ const Messages = ({ currentUserId }) => {
     });
 
     socket.on("newMessage", (message) => {
-      console.log("📨 Nouveau message reçu via WebSocket :", message);
       const roomId = createRoomId(currentUserId, message.sender_id);
       if (selectedConversation === message.sender_id || selectedConversation === message.receiver_id) {
         setMessages(prevMessages => {
-          console.log("Mise à jour des messages :", [...prevMessages, message]);
           return [...prevMessages, message];
         });
-      } else {
-        console.log("Message reçu mais conversation non sélectionnée :", selectedConversation, message);
       }
     });
 

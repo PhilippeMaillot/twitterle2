@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
-import "../../pages/home/Home";
+import "./TopThemes.css";
 
 const TopThemes = ({ topThemes }) => {
   return (

@@ -39,7 +39,7 @@ const Parametre = () => {
 
     const handleSaveChanges = async () => {
         if (!formData.username || !formData.email) {
-            setMessage("❌ Le nom d'utilisateur et l'email sont obligatoires !");
+            setMessage("Le nom d'utilisateur et l'email sont obligatoires !");
             return;
         }
 
@@ -50,8 +50,6 @@ const Parametre = () => {
         if (!updatedData.password.trim()) {
             delete updatedData.password;
         }
-
-        console.log("🚀 Données envoyées :", updatedData);
 
         try {
             const token = localStorage.getItem("token");
@@ -70,10 +68,10 @@ const Parametre = () => {
                 setMessage("✅ Modifications enregistrées !");
                 setUserData(data);
             } else {
-                setMessage(`❌ Erreur : ${data.error || "Modification échouée"}`);
+                setMessage(`Erreur : ${data.error || "Modification échouée"}`);
             }
         } catch (error) {
-            setMessage("❌ Erreur réseau, réessayez plus tard.");
+            setMessage("Erreur réseau, réessayez plus tard.");
         }
     };
 
