@@ -7,16 +7,14 @@ const http = require("http");
 const app = express();
 const port = process.env.PORT || 8081;
 
-// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-// Création du serveur HTTP lié à Express
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // À restreindre en production
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
